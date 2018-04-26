@@ -1,0 +1,14 @@
+<div class="row" style="height: 60px;"></div>
+<div class="row">
+	<button type="button" class="btn btn-default" (click)="goBack()">返回</button>
+</div>
+
+<div class="row">
+	<form>
+  		<div class="form-group">
+			<label>名称：</label>
+			<input type="text" #category>
+			<button type="button" class="btn btn-primary" (click)="addCategory(category.value); category.value=''">提交</button>
+		</div>
+	</form>
+</div>

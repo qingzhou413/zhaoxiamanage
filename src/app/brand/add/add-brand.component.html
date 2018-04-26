@@ -1,0 +1,34 @@
+<div class="row" style="height: 60px;"></div>
+<div class="row">
+  <a mat-button (click)="goBack()">返回</a>
+</div>
+
+<!-- 品牌名称 -->
+<div class="row">
+  <div class="col-md-offset-1 col-md-8">
+    <mat-form-field>
+      <input matInput placeholder="品牌名称" required [(ngModel)]="name"/>
+      <mat-error *ngIf="addingBrandFormControl.hasError('required')">
+        请输入品牌名称
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>
+
+<!--提交-->
+<div class="row">
+  <div class="col-md-offset-2">
+    <button mat-raised-button color="primary" disabled *ngIf="formHasError()">提交</button>
+    <button mat-raised-button color="primary" *ngIf="!formHasError()" (click)="submitAddBrand();">提交</button>
+  </div>
+</div>
+
+
+
+<!--&lt;!&ndash;  &ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-md-offset-1">-->
+<!--<mat-form-field>-->
+<!--</mat-form-field>-->
+<!--</div>-->
+<!--</div>-->

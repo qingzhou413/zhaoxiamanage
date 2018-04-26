@@ -1,0 +1,184 @@
+<div class="row" style="height: 60px;"></div>
+<div class="row">
+  <!--<button mat-icon-button (click)="goBack()">
+    <mat-icon>返回</mat-icon>
+  </button>-->
+  <a mat-button (click)="goBack()">返回</a>
+</div>
+
+<!-- 商品名称 -->
+<div class="row">
+  <div class="col-md-offset-1 col-md-8">
+    <mat-form-field>
+      <input matInput placeholder="商品名称" [(ngModel)]="goods.name"/>
+    </mat-form-field>
+  </div>
+</div>
+
+<!--类目-->
+<div class="row">
+    <div class="col-md-offset-1 col-md-8">
+      <mat-form-field>
+        <mat-select placeholder="主类目" [(ngModel)]="goods.rootCatId" (change)="selectRootCat();">
+          <mat-option *ngFor="let cat of rootCats" [value]="cat.id">
+            {{ cat.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="goods.rootCatId">
+        <mat-select placeholder="次类目" [(ngModel)]="goods.subCatId">
+          <mat-option *ngFor="let cat of subCats" [value]="cat.id">
+            {{ cat.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+</div>
+<!--品牌-->
+<div class="row">
+  <div class="col-md-offset-1 col-md-8">
+    <mat-form-field>
+      <mat-select placeholder="品牌" [(ngModel)]="goods.brandId">
+        <mat-option *ngFor="let brand of brands" [value]="brand.id">
+          {{ brand.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="包装方式" [(ngModel)]="goods.packStyleId">
+        <mat-option *ngFor="let pack of packs" [value]="pack.id">
+          {{ pack.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<!-- 商品规格 -->
+<div class="row">
+  <div class="col-md-offset-1 col-md-8">
+    <button mat-button color="primary" (click)="addSpec();" *ngIf="!addingSpec">+ 添加规格</button>
+    <mat-card *ngIf="addingSpec">
+      <div class="row">
+        <div class="col-md-offset-1">
+          <mat-form-field>
+            <input matInput placeholder="规格名称" required [(ngModel)]="addingSpecDet.specName"/>
+            <mat-error *ngIf="addingSpecFormControl.hasError('required')">
+              请输入规格名称
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-offset-1">
+          <mat-form-field>
+            <input matInput placeholder="价格" required type="number" [(ngModel)]="addingSpecDet.price"/>
+            <mat-error *ngIf="addingSpecFormControl.hasError('required')">
+              请输入正确的数字
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-offset-1">
+          <mat-form-field>
+            <input matInput placeholder="库存" required type="" [(ngModel)]="addingSpecDet.leftCnt"/>
+            <mat-error *ngIf="addingSpecFormControl.hasError('required')">
+              请输入库存
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-offset-1">
+          <mat-form-field>
+            <input matInput placeholder="条码" [(ngModel)]="addingSpecDet.barCode"/>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-1">
+          <button mat-button color="primary" disabled *ngIf="addSpectformHasError()">保存</button>
+          <button mat-button color="primary" *ngIf="!addSpectformHasError()" (click)="saveAddSpec();">保存</button>
+          <button mat-button color="warn" (click)="addSpectformHasError();">取消</button>
+        </div>
+      </div>
+    </mat-card>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>名称</th>
+        <th>价格</th>
+        <th>库存</th>
+        <th>条码</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let det of goods.specDets; let i = index">
+        <td>{{(i + 1)}}</td>
+        <td>{{det.specName}}</td>
+        <td>{{det.price}}</td>
+        <td>{{det.leftCnt}}</td>
+        <td>{{det.barCode}}</td>
+        <td>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-danger" (click)="delSpec(i);">删除</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 商品图片 -->
+<div class="row">
+    <div class="col-md-offset-1 col-md-8">
+      <p>主图(建议尺寸为640像素*640像素，大小不超过500kb)</p>
+
+      <div *ngIf="goods.headImg" class="col-md-2">
+        <img style="max-width: 130px; max-height: 130px;" src="http://market.515huitao.com{{goods.headImg}}" class="img-rounded"/>
+      </div>
+      <div class="col-md-2">
+        <!--<input type="file" ng2FileSelect style="display: none;" [uploader]="uploader" (change)="selectedFileOnChanged($event)" />-->
+        <input type="file" #fileupload name="upImg" (change)="fileChange(fileupload.files, 'main')"/>
+        <!--<img src="../../../assets/imgs/add_file.png" alt="设置图片" class="img-rounded"/>-->
+      </div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-8">
+    <p>其它图片(选传，单张图片大小不超过500kb，最多10张)</p>
+    <div *ngIf="goods.detImgsStr.length > 0">
+      <div *ngFor="let subImg of goods.detImgsStr.split(',')" class="col-md-2">
+        <img style="max-width: 130px; max-height: 130px;" src="http://market.515huitao.com{{subImg}}" class="img-rounded"/>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <input type="file" #fileupload2 name="upImg2" (change)="fileChange(fileupload2.files, 'others')"/>
+      <!--<img src="../../../assets/imgs/add_file.png" alt="添加图片" class="img-rounded"/>-->
+    </div>
+  </div>
+</div>
+
+<!--描述信息-->
+<div class="row">
+  <div class="col-md-offset-1 col-md-8">
+    <mat-form-field style="min-width: 400px;">
+      <textarea rows="3" matInput placeholder="商品描述"  [(ngModel)]="goods.desc"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<!--提交-->
+<div class="row">
+  <div class="col-md-offset-2">
+    <button mat-raised-button color="primary" disabled *ngIf="addGoodsFormHasError()">提交</button>
+    <button mat-raised-button color="primary" *ngIf="!addGoodsFormHasError()" (click)="submitAddGoods();">提交</button>
+  </div>
+</div>
+
+
+
+<!--&lt;!&ndash;  &ndash;&gt;-->
+<!--<div class="row">-->
+  <!--<div class="col-md-offset-1">-->
+    <!--<mat-form-field>-->
+    <!--</mat-form-field>-->
+  <!--</div>-->
+<!--</div>-->

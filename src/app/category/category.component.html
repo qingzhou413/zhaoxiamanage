@@ -1,0 +1,29 @@
+<div class="row" style="height: 60px;"></div>
+<div class="row">
+	<button type="button" class="btn btn-default" (click)="clickAddRootCategory()">添加主类目</button>
+</div>
+<div class="row">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>名称</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let cat of cats; let i = index">
+				<td>{{(i + 1)}}</td>
+				<td>{{cat.name}}</td>
+				<td>
+					<div class="btn-group" role="group">
+					  <button type="button" class="btn btn-info" (click)="clickConfigCategory(cat.id);">修改</button>
+					  <button type="button" class="btn btn-danger" (click)="delCat(cat.id);">删除</button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+

@@ -1,0 +1,28 @@
+<div class="row" style="height: 60px;"></div>
+<div class="row">
+  <button type="button" class="btn btn-default" (click)="clickAddBrand();">添加品牌</button>
+</div>
+<div class="row">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>名称</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let brand of brands; let i = index">
+      <td>{{(i + 1)}}</td>
+      <td>{{brand.name}}</td>
+      <td>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-danger" (click)="delBrand(brand.id);">删除</button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+

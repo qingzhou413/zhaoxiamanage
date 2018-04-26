@@ -1,0 +1,43 @@
+<div class="row" style="height: 60px;"></div>
+<div class="row">
+	<button type="button" class="btn btn-default" (click)="clickAddGoods()">添加商品</button>
+</div>
+<div class="row">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>名称</th>
+				<th>分类</th>
+				<th>价格</th>
+				<th>销量</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let g of goods; let i = index">
+				<td>{{(i + 1)}}</td>
+				<td>{{g.name}}</td>
+				<td>{{g.category}}</td>
+				<td>
+          <div *ngFor="let det of g.specDets">
+            {{det.specName}}:￥{{det.price}},剩余数量:{{det.leftCnt}}
+          </div>
+        </td>
+				<td>{{g.saleCount}}</td>
+				<td>
+					<div class="btn-group" role="group">
+					  <button type="button" class="btn btn-info">查看</button>
+					  <button type="button" class="btn btn-danger">删除</button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+  <mat-paginator [length]="length"
+                 [pageSize]="numPerPage"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageChange($event)">
+  </mat-paginator>
+</div>
+

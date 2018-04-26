@@ -1,1 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('../node_modules/bootstrap/dist/css/bootstrap.css');
+/*如果需要md-icon需要引入*/
+/*@import '~https://fonts.googleapis.com/icon?family=Material+Icons';*/
+/*引入主题*/
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+body{
+  margin: 0;
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: #f1f1f1;
+}
+
+@media (min-width: 768px) {
+  #xs-navbar-collapse{
+    display: none !important;
+  }
+}
+
+/*大屏幕时的菜单*/
+.left-nav-menu{
+  width: 200px;
+  height: calc(100vh - 50px);
+  background: #f8f8f8;
+  border-right: 1px solid rgb(231,231,231);
+  float: left;
+  position: fixed;
+}
+
+.left-nav-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.left-nav-menu ul li{
+  height: 44px;
+  font-size: 14px;
+  line-height: 44px;
+  padding-left: 55px;
+  cursor: pointer;
+  color: #71777f;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 20px center;
+  transition: all 0.3s;
+}
+
+.left-nav-menu ul .menuSelected{
+  background-color: #f1f1f1;
+}
+
+.left-nav-menu ul li:hover{
+  background-color: #f1f1f1;
+}
+
+.mat-paginator{
+  background-color: transparent;
+  padding: 0 30px;
+}
+
+@media (max-width: 768px) {
+  .left-nav-menu{
+    display: none;
+  }
+}
